@@ -1,51 +1,12 @@
-class Teacher {
-    #id
-    #fullName
-    #password
-    #email
-    #image
-    constructor(id, fullName, email, password, image) {
-        this.id = id
-        this.fullName = fullName
-        this.password = password
-        this.email = email
-        this.image = image
-    }
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-    get id() {
-        return this.#id
-    }
-    set id(value) {
-        this.#id = value
-    }
+const teacherSchema = new Schema({
+    _id: { type: Number, required: true },
+    fullName: { type: String, required: true },
+    password: { type: String, required: true },
+    email: { type: String, required: true },
+    image: { type: String, required: true },
+})
 
-    get fullName() {
-        return this.#fullName
-    }
-    set fullName(value) {
-        this.#fullName = value
-    }
-
-    get image() {
-        return this.#image
-    }
-    set image(value) {
-        this.#image = value
-    }
-
-    get password() {
-        return this.#password
-    }
-    set password(value) {
-        this.#password = value
-    }
-
-    get email() {
-        return this.#email
-    }
-    set email(value) {
-        this.#email = value
-    }
-}
-
-module.exports = Teacher
+mongoose.model('teacher', teacherSchema)
