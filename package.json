@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./src/app",
-    "build": "node ./src/app",
+    "start": "nodemon ./src/server",
+    "build": "node ./src/server",
     "lint": "eslint ./src --ext .js"
   },
   "author": "Ahmed_Bahgat",

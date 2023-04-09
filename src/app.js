@@ -4,18 +4,14 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 // const routes = require('./Routes')
 
-// starting server
-const server = express()
-const port = process.env.SERVER_PORT || 8080
-server.listen(port, () => {
-    console.log(`server is listening on port ${port} ......`)
-})
+const app = express()
 
-// middlewares & routes
-server.use(morgan('tiny'))
-server.use(bodyParser)
+app.use(morgan('tiny'))
+app.use(bodyParser)
 // server.use(routes)
-server.use((req, res, next) => {
+app.use((req, res, next) => {
     res.status(404).json({ message: 'Page Not Found' })
     next()
 })
+
+module.exports = app
