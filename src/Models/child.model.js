@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const sequence = require('./childSequence.model')
+const sequence = require('./sequence.model')
 
 const childSchema = new Schema({
     _id: { type: Number },

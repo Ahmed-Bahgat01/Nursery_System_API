@@ -11,11 +11,19 @@ exports.indexTeachers = async function (req, res, next) {
     }
 }
 
+// exports.createTeacher = async function (req, res, next) {
+//     let child = new teacherSchema(req.body)
+//     try {
+//         let data = await child.save()
+//         res.status(200).json({ data })
+//     } catch (error) {
+//         next(error)
+//     }
+// }
 exports.createTeacher = async function (req, res, next) {
-    let child = new teacherSchema(req.body)
     try {
-        let data = await child.save()
-        res.status(200).json({ data })
+        var entity = await teacherSchema.createWithAutoId(req.body)
+        res.status(201).send(entity)
     } catch (error) {
         next(error)
     }
