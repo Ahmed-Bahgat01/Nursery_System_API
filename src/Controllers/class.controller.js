@@ -52,7 +52,6 @@ exports.deleteClass = async function (req, res, next) {
 
 exports.getSupervisor = async function (req, res, next) {
     try {
-        // console.log(`req_id: ${req.params.id}`)
         let targetClass = await classSchema
             .findOne({ _id: req.params.id })
             .populate('supervisor')

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const sequence = require('./sequence.model')
+const registerAutoIdCreate = require('../helpers/createWithAutoId')
 
 const childSchema = new Schema({
     _id: { type: Number, required: true },
@@ -13,18 +13,5 @@ const childSchema = new Schema({
         building: { type: Number, required: true },
     },
 })
-
-childSchema.statics.createWithAutoId = async function (data) {
-    let Entity = this
-    let counter = await sequence.findByIdAndUpdate(
-        { _id: 'childSeq' },
-        { $inc: { seq: 1 } },
-        { new: true, upsert: true }
-    )
-    let entity = new Entity(data)
-    entity._id = counter.seq
-    await entity.save()
-    return entity
-}
-
+registerAutoIdCreate('childSeq', childSchema)
 mongoose.model('child', childSchema)
