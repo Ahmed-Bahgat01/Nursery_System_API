@@ -1,20 +1,23 @@
+require('../Models/user.model')
+const mongoose = require('mongoose')
+const userSchema = mongoose.model('user')
 const jwt = require('jsonwebtoken')
 
-exports.authenticate = function (req, res, next) {
+exports.authenticate = async function (req, res, next) {
     try {
-        if (req.body.email == 'x@x.com' && req.body.password == '123') {
+        let targetUser = await userSchema.findOne({ email: req.body.email })
+        if (targetUser == null || targetUser.password != req.body.password) {
+            throw new Error('invalid username or password')
+        } else {
             const token = jwt.sign(
                 {
-                    id: 1,
-                    role: 'admin',
-                    userName: 'mr.X',
+                    id: targetUser._id,
+                    role: targetUser.role,
                 },
                 process.env.JWT_SECRET_KEY,
                 { expiresIn: '2h' }
             )
             res.status(200).json({ token })
-        } else {
-            throw new Error('invalid username or password')
         }
     } catch (error) {
         next(error)

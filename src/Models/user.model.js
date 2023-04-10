@@ -4,7 +4,7 @@ const sequence = require('./sequence.model')
 
 const userSchema = new Schema({
     _id: { type: Number, required: true },
-    email: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     role: { type: String, required: true, enum: ['Instructor', 'Admin'] },
 })
