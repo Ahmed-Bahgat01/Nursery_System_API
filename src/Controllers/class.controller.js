@@ -1,6 +1,8 @@
 require('../Models/class.model')
 const mongoose = require('mongoose')
 const classSchema = mongoose.model('class')
+const teacherSchema = mongoose.model('teacher')
+const childSchema = mongoose.model('teacher')
 
 exports.indexClasses = async function (req, res, next) {
     try {
@@ -13,6 +15,16 @@ exports.indexClasses = async function (req, res, next) {
 
 exports.createClass = async function (req, res, next) {
     try {
+        let foundChildren = await childSchema.find({
+            _id: { $in: req.body.children },
+        })
+        let foundAdvisor = await teacherSchema.findById(req.body.advisor)
+        if (foundChildren.length != req.body.children.length) {
+            throw new Error('children not found')
+        }
+        if (!foundAdvisor) {
+            throw new Error('advisor not found')
+        }
         var entity = await classSchema.createWithAutoId(req.body)
         res.status(201).send(entity)
     } catch (error) {
