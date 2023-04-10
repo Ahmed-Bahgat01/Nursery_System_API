@@ -6,7 +6,11 @@ const userSchema = new Schema({
     _id: { type: Number, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    role: { type: String, required: true, enum: ['Instructor', 'Admin'] },
+    // role: {
+    //     type: String,
+    //     required: true,
+    //     enum: ['Instructor', 'Admin', 'Child'],
+    // },
 })
 
 userSchema.statics.createWithAutoId = async function (data) {
@@ -22,4 +26,4 @@ userSchema.statics.createWithAutoId = async function (data) {
     return entity
 }
 
-mongoose.model('user', userSchema)
+mongoose.model('admin', userSchema)

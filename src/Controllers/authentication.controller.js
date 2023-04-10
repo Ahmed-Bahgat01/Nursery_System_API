@@ -1,18 +1,31 @@
-require('../Models/user.model')
+require('../Models/admin.model')
+require('../Models/teacher.model')
 const mongoose = require('mongoose')
-const userSchema = mongoose.model('user')
+const adminSchema = mongoose.model('admin')
+const teacherSchema = mongoose.model('teacher')
 const jwt = require('jsonwebtoken')
 
 exports.authenticate = async function (req, res, next) {
     try {
-        let targetUser = await userSchema.findOne({ email: req.body.email })
-        if (targetUser == null || targetUser.password != req.body.password) {
+        let roleTracker = null
+        let foundUser = false
+        if (!foundUser) {
+            foundUser = await adminSchema.findOne({ email: req.body.email })
+            roleTracker = 'Admin'
+        }
+        if (!foundUser) {
+            foundUser = await teacherSchema.findOne({ email: req.body.email })
+            roleTracker = 'Instructor'
+        }
+        if (!foundUser || foundUser.password != req.body.password) {
+            console.log(foundUser)
             throw new Error('invalid username or password')
-        } else {
+        }
+        if (foundUser && foundUser.password == req.body.password) {
             const token = jwt.sign(
                 {
-                    id: targetUser._id,
-                    role: targetUser.role,
+                    id: foundUser._id,
+                    role: roleTracker,
                 },
                 process.env.JWT_SECRET_KEY,
                 { expiresIn: '2h' }

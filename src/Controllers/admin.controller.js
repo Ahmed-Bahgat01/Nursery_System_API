@@ -1,6 +1,6 @@
-require('../Models/user.model')
+require('../Models/admin.model')
 const mongoose = require('mongoose')
-const userSchema = mongoose.model('user')
+const userSchema = mongoose.model('admin')
 
 exports.indexUsers = async function (req, res, next) {
     try {

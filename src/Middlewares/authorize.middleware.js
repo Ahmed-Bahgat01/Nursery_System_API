@@ -11,3 +11,13 @@ module.exports = (req, res, next) => {
         next(new Error('not Athenticated'))
     }
 }
+
+module.exports.checkAdmin = (request, response, next) => {
+    if (request.decodedToken.role == 'Admin') next()
+    else next(new Error('Not Authorized'))
+}
+
+module.exports.checkInstructor = (request, response, next) => {
+    if (request.decodedToken.role == 'Instructor') next()
+    else next(new Error('Not Authorized'))
+}
