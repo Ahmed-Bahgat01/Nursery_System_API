@@ -1,5 +1,5 @@
-const teacherRoutes = require('./api/teacher.routes')
-const childRoutes = require('./api/child.routes')
+const teacherRoutes = require('./teacher.routes')
+const childRoutes = require('./child.routes')
 const express = require('express')
 
 const routes = express.Router()

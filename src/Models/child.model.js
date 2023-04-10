@@ -14,19 +14,6 @@ const childSchema = new Schema({
     },
 })
 
-// childSchema.statics.createWithAutoId = function (data, callback) {
-//     let Entity = this
-//     sequence.findByIdAndUpdate(
-//         { _id: 'childSeq' },
-//         { $inc: { seq: 1 } },
-//         function (error, counter) {
-//             if (error) return callback(error)
-//             var entity = new Entity(data)
-//             entity._id = counter.seq
-//             entity.save(callback)
-//         }
-//     )
-// }
 childSchema.statics.createWithAutoId = async function (data) {
     var Entity = this
     var counter = await sequence.findByIdAndUpdate(

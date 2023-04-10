@@ -2,17 +2,17 @@ require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
-const routes = require('./Routes/index')
+const apiRoutes = require('./Routes/api/index')
+const authRoute = require('./Routes/authenticate/authentication.routes')
+const authMW = require('./Middlewares/authorize.middleware')
 
 const app = express()
 
 app.use(morgan('tiny'))
 app.use(bodyParser.json())
-app.use('/api', routes)
-
-// app.get('/', function (req, res) {
-//     res.send('Hello World!')
-// })
+app.use('/authenticate', authRoute)
+app.use(authMW)
+app.use('/api', apiRoutes)
 
 app.use((req, res, next) => {
     res.status(404).json({ message: 'Page Not Found' })

@@ -11,15 +11,6 @@ exports.indexChildren = async function (req, res, next) {
     }
 }
 
-// exports.createChild = async function (req, res, next) {
-//     let child = new childSchema(req.body)
-//     try {
-//         let data = await child.save()
-//         res.status(200).json({ data })
-//     } catch (error) {
-//         next(error)
-//     }
-// }
 exports.createChild = async function (req, res, next) {
     try {
         var entity = await childSchema.createWithAutoId(req.body)
