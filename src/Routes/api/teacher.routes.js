@@ -5,12 +5,12 @@ const router = express.Router()
 
 router
     .route('/')
-    .get(teacherController.indexteachers)
-    .post(teacherController.createteacher)
+    .get(teacherController.indexTeachers)
+    .post(teacherController.createTeacher)
 router
     .route('/:id')
-    .get(teacherController.showteacher)
-    .patch(teacherController.updateteacher)
-    .delete(teacherController.deleteteacher)
+    .get(teacherController.showTeacher)
+    .patch(teacherController.updateTeacher)
+    .delete(teacherController.deleteTeacher)
 
 module.exports = router

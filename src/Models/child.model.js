@@ -3,9 +3,9 @@ const Schema = mongoose.Schema
 
 const childSchema = new Schema({
     _id: { type: Number, required: true },
-    fullname: { type: String, required: true },
+    fullName: { type: String, required: true },
     age: { type: Number, required: true },
-    level: { type: Number, required: true, enum: ['preKG', 'KG1', 'KG2'] },
+    level: { type: String, required: true, enum: ['preKG', 'KG1', 'KG2'] },
     address: {
         city: { type: String, required: true },
         street: { type: String, required: true },
