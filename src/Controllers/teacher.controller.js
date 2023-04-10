@@ -32,7 +32,6 @@ exports.showTeacher = async function (req, res, next) {
 exports.updateTeacher = async function (req, res, next) {
     try {
         await teacherSchema.findByIdAndUpdate(req.params.id, req.body)
-        await teacherSchema.save()
         res.status(200).json({ data: 'updated successfully' })
     } catch (error) {
         next(error)
@@ -47,6 +46,7 @@ exports.deleteTeacher = async function (req, res, next) {
         if (!deletedTeacher) {
             throw new Error('child not found')
         }
+        res.status(200).json({ data: 'deleted sucessfully' })
     } catch (error) {
         next(error)
     }

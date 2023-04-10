@@ -32,7 +32,6 @@ exports.showChild = async function (req, res, next) {
 exports.updateChild = async function (req, res, next) {
     try {
         await childSchema.findByIdAndUpdate(req.params.id, req.body)
-        await childSchema.save()
         res.status(200).json({ data: 'updated successfully' })
     } catch (error) {
         next(error)
@@ -45,6 +44,7 @@ exports.deleteChild = async function (req, res, next) {
         if (!deletedChild) {
             throw new Error('child not found')
         }
+        res.status(200).json({ data: 'deleted sucessfully' })
     } catch (error) {
         next(error)
     }
