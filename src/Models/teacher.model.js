@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const registerAutoIdCreate = require('../helpers/modelHelpers/createWithAutoId')
-const preSaveHashColumn = require('../helpers/modelHelpers/preSaveHashColumn')
+const preEventsHashColumn = require('../helpers/modelHelpers/preSaveHashColumn')
 
 const teacherSchema = new Schema({
     _id: { type: Number, required: true },
@@ -11,7 +11,7 @@ const teacherSchema = new Schema({
     image: { type: String, required: true },
 })
 
-preSaveHashColumn(
+preEventsHashColumn(
     teacherSchema,
     'password',
     parseInt(process.env.BCRYPT_SALT_ROUNDS)

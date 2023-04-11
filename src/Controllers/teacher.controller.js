@@ -49,7 +49,15 @@ exports.updateTeacher = async function (req, res, next) {
         if (!authorized) {
             throw new Error(errorMessages.notAuthorized)
         }
-        await teacherSchema.findByIdAndUpdate(req.params.id, req.body)
+        let targetUser = await teacherSchema.findById(req.params.id)
+        if (!targetUser) {
+            throw new Error(errorMessages.notFound)
+        }
+        targetUser.email = req.body.email
+        targetUser.password = req.body.password
+        targetUser.fullName = req.body.fullName
+        targetUser.image = req.body.image
+        await targetUser.save()
         res.status(200).json({ data: userMessages.updateSuccess })
     } catch (error) {
         next(error)

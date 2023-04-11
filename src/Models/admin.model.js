@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const registerAutoIdCreate = require('../helpers/modelHelpers/createWithAutoId')
-const preSaveHashColumn = require('../helpers/modelHelpers/preSaveHashColumn')
+const preEventsHashColumn = require('../helpers/modelHelpers/preSaveHashColumn')
 
 const adminSchema = new Schema({
     _id: { type: Number, required: true },
@@ -9,7 +9,7 @@ const adminSchema = new Schema({
     password: { type: String, required: true },
 })
 
-preSaveHashColumn(
+preEventsHashColumn(
     adminSchema,
     'password',
     parseInt(process.env.BCRYPT_SALT_ROUNDS)

@@ -32,7 +32,13 @@ exports.showUser = async function (req, res, next) {
 
 exports.updateUser = async function (req, res, next) {
     try {
-        await userSchema.findByIdAndUpdate(req.params.id, req.body)
+        let targetUser = await userSchema.findById(req.params.id)
+        if (!targetUser) {
+            throw new Error(errorMessages.notFound)
+        }
+        targetUser.email = req.body.email
+        targetUser.password = req.body.password
+        await targetUser.save()
         res.status(200).json({ data: userMessages.updateSuccess })
     } catch (error) {
         next(error)
