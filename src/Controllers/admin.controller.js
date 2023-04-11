@@ -14,7 +14,7 @@ exports.indexUsers = async function (req, res, next) {
 
 exports.createUser = async function (req, res, next) {
     try {
-        var entity = await userSchema.createWithAutoId(req.body)
+        let entity = await userSchema.createWithAutoId(req.body)
         res.status(201).send(entity)
     } catch (error) {
         next(error)
