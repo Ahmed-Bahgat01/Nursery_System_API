@@ -12,12 +12,17 @@ module.exports = (req, res, next) => {
     }
 }
 
-module.exports.checkAdmin = (request, response, next) => {
-    if (request.decodedToken.role == 'Admin') next()
+module.exports.checkAdmin = (req, res, next) => {
+    if (req.decodedToken.role == 'Admin') next()
     else next(new Error('Not Authorized'))
 }
 
-module.exports.checkInstructor = (request, response, next) => {
-    if (request.decodedToken.role == 'Instructor') next()
+module.exports.checkInstructor = (req, res, next) => {
+    if (req.decodedToken.role == 'Instructor') next()
+    else next(new Error('Not Authorized'))
+}
+
+module.exports.checkAdminOrInstructor = (req, res, next) => {
+    if (['Instructor', 'Admin'].includes(req.decodedToken.role)) next()
     else next(new Error('Not Authorized'))
 }

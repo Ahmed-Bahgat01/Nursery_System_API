@@ -2,7 +2,7 @@ const express = require('express')
 const teacherController = require('../../Controllers/teacher.controller')
 const {
     checkAdmin,
-    checkInstructor,
+    checkAdminOrInstructor,
 } = require('../../Middlewares/authorize.middleware')
 
 const router = express.Router()
@@ -13,8 +13,8 @@ router
     .post(checkAdmin, teacherController.createTeacher)
 router
     .route('/:id')
-    .get(checkInstructor, teacherController.showTeacher)
-    .patch(checkInstructor, teacherController.updateTeacher)
+    .get(checkAdminOrInstructor, teacherController.showTeacher)
+    .patch(checkAdminOrInstructor, teacherController.updateTeacher)
     .delete(checkAdmin, teacherController.deleteTeacher)
 
 module.exports = router

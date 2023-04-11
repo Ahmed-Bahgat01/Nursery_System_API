@@ -1,4 +1,4 @@
-const sequence = require('../Models/sequence.model')
+const sequence = require('../../Models/sequence.model')
 const registerAutoIdCreate = async function (seqId, schema) {
     schema.statics.createWithAutoId = async function (data) {
         var Entity = this
