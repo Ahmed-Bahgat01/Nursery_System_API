@@ -1,6 +1,7 @@
 require('../Models/child.model')
 const mongoose = require('mongoose')
 const childSchema = mongoose.model('child')
+const { errorMessages, userMessages } = require('../Utils/messages')
 
 exports.indexChildren = async function (req, res, next) {
     try {
@@ -32,7 +33,7 @@ exports.showChild = async function (req, res, next) {
 exports.updateChild = async function (req, res, next) {
     try {
         await childSchema.findByIdAndUpdate(req.params.id, req.body)
-        res.status(200).json({ data: 'updated successfully' })
+        res.status(200).json({ data: userMessages.updateSuccess })
     } catch (error) {
         next(error)
     }
@@ -42,9 +43,9 @@ exports.deleteChild = async function (req, res, next) {
     try {
         const deletedChild = await childSchema.findByIdAndDelete(req.params.id)
         if (!deletedChild) {
-            throw new Error('child not found')
+            throw new Error(errorMessages.notFound)
         }
-        res.status(200).json({ data: 'deleted sucessfully' })
+        res.status(200).json({ data: userMessages.deleteSuccess })
     } catch (error) {
         next(error)
     }

@@ -1,6 +1,7 @@
 require('../Models/admin.model')
 const mongoose = require('mongoose')
 const userSchema = mongoose.model('admin')
+const { errorMessages, userMessages } = require('../Utils/messages')
 
 exports.indexUsers = async function (req, res, next) {
     try {
@@ -32,7 +33,7 @@ exports.showUser = async function (req, res, next) {
 exports.updateUser = async function (req, res, next) {
     try {
         await userSchema.findByIdAndUpdate(req.params.id, req.body)
-        res.status(200).json({ data: 'updated successfully' })
+        res.status(200).json({ data: userMessages.updateSuccess })
     } catch (error) {
         next(error)
     }
@@ -42,9 +43,9 @@ exports.deleteUser = async function (req, res, next) {
     try {
         const deletedUser = await userSchema.findByIdAndDelete(req.params.id)
         if (!deletedUser) {
-            throw new Error('admin not found')
+            throw new Error(errorMessages.notFound)
         }
-        res.status(200).json({ data: 'deleted sucessfully' })
+        res.status(200).json({ data: userMessages.deleteSuccess })
     } catch (error) {
         next(error)
     }

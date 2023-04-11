@@ -1,4 +1,5 @@
 const sequence = require('../../Models/sequence.model')
+
 const registerAutoIdCreate = async function (seqId, schema) {
     schema.statics.createWithAutoId = async function (data) {
         var Entity = this
@@ -15,6 +16,3 @@ const registerAutoIdCreate = async function (seqId, schema) {
 }
 
 module.exports = registerAutoIdCreate
-
-// childSchema.statics.createWithAutoId = async function (data) {
-//     createWithAutoIdHelper(data, 'childSeq')

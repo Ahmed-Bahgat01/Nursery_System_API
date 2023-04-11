@@ -5,6 +5,7 @@ const adminSchema = mongoose.model('admin')
 const teacherSchema = mongoose.model('teacher')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
+const { errorMessages } = require('../Utils/messages')
 
 exports.authenticate = async function (req, res, next) {
     try {
@@ -19,14 +20,14 @@ exports.authenticate = async function (req, res, next) {
             roleTracker = 'Instructor'
         }
         if (!foundUser) {
-            throw new Error('invalid username or password')
+            throw new Error(errorMessages.loginFailed)
         }
         const validPassword = await bcrypt.compareSync(
             req.body.password,
             foundUser.password
         )
         if (!validPassword) {
-            throw new Error('invalid username or password')
+            throw new Error(errorMessages.loginFailed)
         }
         if (validPassword) {
             const token = jwt.sign(

@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const classSchema = mongoose.model('class')
 const teacherSchema = mongoose.model('teacher')
 const childSchema = mongoose.model('teacher')
+const { errorMessages, userMessages } = require('../Utils/messages')
 
 exports.indexClasses = async function (req, res, next) {
     try {
@@ -20,10 +21,10 @@ exports.createClass = async function (req, res, next) {
         })
         let foundAdvisor = await teacherSchema.findById(req.body.advisor)
         if (foundChildren.length != req.body.children.length) {
-            throw new Error('children not found')
+            throw new Error(errorMessages.notFound)
         }
         if (!foundAdvisor) {
-            throw new Error('advisor not found')
+            throw new Error(errorMessages.notFound)
         }
         let entity = await classSchema.createWithAutoId(req.body)
         res.status(201).send(entity)
@@ -44,7 +45,7 @@ exports.showClass = async function (req, res, next) {
 exports.updateClass = async function (req, res, next) {
     try {
         await classSchema.findByIdAndUpdate(req.params.id, req.body)
-        res.status(200).json({ data: 'updated successfully' })
+        res.status(200).json({ data: userMessages.updateSuccess })
     } catch (error) {
         next(error)
     }
@@ -54,9 +55,9 @@ exports.deleteClass = async function (req, res, next) {
     try {
         const deletedClass = await classSchema.findByIdAndDelete(req.params.id)
         if (!deletedClass) {
-            throw new Error('class not found')
+            throw new Error(errorMessages.notFound)
         }
-        res.status(200).json({ data: 'deleted sucessfully' })
+        res.status(200).json({ data: userMessages.deleteSuccess })
     } catch (error) {
         next(error)
     }
@@ -72,7 +73,7 @@ exports.getSupervisor = async function (req, res, next) {
             let targetSupervisor = targetClass.supervisor
             res.status(200).json({ supervisor: targetSupervisor })
         } else {
-            throw new Error('class not found')
+            throw new Error(errorMessages.notFound)
         }
     } catch (error) {
         next(error)
@@ -88,7 +89,7 @@ exports.getChildren = async function (req, res, next) {
             let targetChildren = targetClass.children
             res.status(200).json({ children: targetChildren })
         } else {
-            throw new Error('class not found')
+            throw new Error(errorMessages.notFound)
         }
     } catch (error) {
         next(error)

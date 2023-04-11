@@ -2,6 +2,7 @@ require('../Models/teacher.model')
 const mongoose = require('mongoose')
 const teacherSchema = mongoose.model('teacher')
 const authChecks = require('../helpers/controllerHelpers/authChecks')
+const { errorMessages, userMessages } = require('../Utils/messages')
 
 exports.indexTeachers = async function (req, res, next) {
     try {
@@ -29,7 +30,7 @@ exports.showTeacher = async function (req, res, next) {
             req
         )
         if (!authorized) {
-            throw new Error('Not Authorized')
+            throw new Error(errorMessages.notAuthorized)
         }
         const data = await teacherSchema.findOne({ _id: req.params.id })
         res.status(200).json({ data })
@@ -46,10 +47,10 @@ exports.updateTeacher = async function (req, res, next) {
             req
         )
         if (!authorized) {
-            throw new Error('Not Authorized')
+            throw new Error(errorMessages.notAuthorized)
         }
         await teacherSchema.findByIdAndUpdate(req.params.id, req.body)
-        res.status(200).json({ data: 'updated successfully' })
+        res.status(200).json({ data: userMessages.updateSuccess })
     } catch (error) {
         next(error)
     }
@@ -61,9 +62,9 @@ exports.deleteTeacher = async function (req, res, next) {
             req.params.id
         )
         if (!deletedTeacher) {
-            throw new Error('child not found')
+            throw new Error(errorMessages.notFound)
         }
-        res.status(200).json({ data: 'deleted sucessfully' })
+        res.status(200).json({ data: userMessages.deleteSuccess })
     } catch (error) {
         next(error)
     }
