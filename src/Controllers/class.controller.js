@@ -19,11 +19,11 @@ exports.createClass = async function (req, res, next) {
         let foundChildren = await childSchema.find({
             _id: { $in: req.body.children },
         })
-        let foundAdvisor = await teacherSchema.findById(req.body.advisor)
+        let foundSupervisor = await teacherSchema.findById(req.body.supervisor)
         if (foundChildren.length != req.body.children.length) {
             throw new Error(errorMessages.notFound)
         }
-        if (!foundAdvisor) {
+        if (!foundSupervisor) {
             throw new Error(errorMessages.notFound)
         }
         let entity = await classSchema.createWithAutoId(req.body)
