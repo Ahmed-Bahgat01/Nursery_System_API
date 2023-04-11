@@ -42,7 +42,7 @@ exports.deleteUser = async function (req, res, next) {
     try {
         const deletedUser = await userSchema.findByIdAndDelete(req.params.id)
         if (!deletedUser) {
-            throw new Error('child not found')
+            throw new Error('admin not found')
         }
         res.status(200).json({ data: 'deleted sucessfully' })
     } catch (error) {

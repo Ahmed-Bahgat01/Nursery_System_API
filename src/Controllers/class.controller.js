@@ -25,7 +25,7 @@ exports.createClass = async function (req, res, next) {
         if (!foundAdvisor) {
             throw new Error('advisor not found')
         }
-        var entity = await classSchema.createWithAutoId(req.body)
+        let entity = await classSchema.createWithAutoId(req.body)
         res.status(201).send(entity)
     } catch (error) {
         next(error)
